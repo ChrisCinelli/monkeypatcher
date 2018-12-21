@@ -1,2 +1,2 @@
-export { default } from './lib/monkeypatcher';
-export { default as getCallers } from './lib/getCallers';
+export { default } from './lib/monkeypatcher.mjs';
+export { default as getCallers } from './lib/getCallers.mjs';

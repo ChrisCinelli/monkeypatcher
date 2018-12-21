@@ -1,25 +1,25 @@
-import monkeypatcher from '..';
+import monkeypatcher from '../dist';
 
 import fs from 'fs';
-monkeypatcher(fs, /readFile/,  {
-    fn: function (name) {
-         console.log.apply(console, arguments);
-        },
-    debug: true,
-    getCallers: 'all'
+monkeypatcher(fs, /readFile/, {
+  fn(name) {
+    console.log.apply(console, arguments);
+  },
+  debug: true,
+  getCallers: 'all',
 });
 
 
 // Asynchronous read
-fs.readFile(__dirname  + '/data.txt', function (err, data) {
-   if (err) {
-      return console.error(err);
-   }
-   console.log("Asynchronous read: " + data.toString());
+fs.readFile(`${__dirname }/data.txt`, (err, data) => {
+  if (err) {
+    return console.error(err);
+  }
+  console.log(`Asynchronous read: ${ data.toString()}`);
 });
 
 // Synchronous read
-var data = fs.readFileSync(__dirname  + '/data.txt');
-console.log("Synchronous read: " + data.toString());
+const data = fs.readFileSync(`${__dirname }/data.txt`);
+console.log(`Synchronous read: ${ data.toString()}`);
 
-console.log("Program Ended");
+console.log('Program Ended');

@@ -1,1 +1,1 @@
-Justa data file
+-- Just a data file --

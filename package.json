@@ -1,0 +1,75 @@
+{
+  "name": "monkeypatcher",
+  "version": "1.0.0",
+  "description": "Monkey patch objects for debugging but also for other useful reasons",
+  "keywords": [
+    "hook",
+    "monkey",
+    "patch",
+    "monkeypatch"
+  ],
+  "main": "./dist/index.js",
+  "scripts": {
+    "debugTest": "node --inspect-brk node_modules/.bin/jest",
+    "test": "jest",
+    "watch:test": "npm run test -- --watch",
+    "cover": "npm run test -- --coverage",
+    "coverHTML": "npm run cover && open ./coverage/lcov-report/index.html",
+    "lint": "eslint lib",
+    "lint-test-staged": "lint-staged",
+    "clean": "rm -rf dist && mkdir dist",
+    "rollup": "./node_modules/.bin/rollup -c",
+    "build-lib": "babel -d ./dist ./index.js -s",
+    "build": "npm run clean && npm run rollup",
+    "prepublish": "npm run lint && npm run cover && npm run build",
+    "sample": "npx babel-node ./sample/fs.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add",
+      "jest --bail --findRelatedTests"
+    ]
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "mockData.js$",
+      ".eslintrc.js$"
+    ],
+    "collectCoverageFrom": [
+      "lib/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 50,
+        "lines": 50
+      }
+    },
+    "setupTestFrameworkScriptFile": "./testSetup.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chriscinelli/middleware-template.git"
+  },
+  "pre-commit": [
+    "lint-test-staged"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-eslint": "10.0.1",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-preset-env": "1.7.0",
+    "babelrc-rollup": "3.0.0",
+    "eslint": "5.10.0",
+    "eslint-config-defaults": "9.0.0",
+    "jest": "22.0.4",
+    "jest-extended": "0.5.0",
+    "lint-staged": "^3.4.0",
+    "pre-commit": "^1.2.2",
+    "rollup": "0.53.3",
+    "rollup-plugin-babel": "3.0.3"
+  }
+}
